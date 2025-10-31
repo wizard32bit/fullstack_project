@@ -1,6 +1,5 @@
 package com.l3mdw1.quiz_app.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,13 +11,9 @@ public class Answer {
     private Long id;
 
     private String content;
-    private boolean is_correct;
-
-    @ManyToOne
-    @JoinColumn(name = "question_id")
-    private Question question;
-
+    private boolean isCorrect;
 }
+
 
 /*
 * [------ Answer -------]           [-------- Question -------]

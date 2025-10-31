@@ -28,6 +28,6 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<QuizScoreboard> quizScores = new ArrayList<>();
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "userCatScore", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategoryScoreboard> categoryScores = new ArrayList<>();
 }

@@ -3,6 +3,8 @@ package com.l3mdw1.quiz_app.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,5 +25,7 @@ public class Question {
     @JoinColumn(name = "quiz_id")
     @JsonIgnore
     private Quiz quiz;
+
+    public Question(){}
 
 }

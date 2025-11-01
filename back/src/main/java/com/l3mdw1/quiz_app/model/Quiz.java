@@ -9,7 +9,6 @@ import java.util.List;
 
 @Data
 @Entity
-@NoArgsConstructor
 public class Quiz {
 
     @Id
@@ -29,4 +28,6 @@ public class Quiz {
     @OneToMany(mappedBy = "quiz", cascade = CascadeType.ALL, orphanRemoval = true)
     @JsonIgnore
     private List<QuizScoreboard> userScores = new ArrayList<>();
+
+    public Quiz(){}
 }

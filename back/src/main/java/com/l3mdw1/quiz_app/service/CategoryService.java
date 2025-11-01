@@ -40,7 +40,7 @@ public class CategoryService {
     // Delete category
     public void deleteCategory(Long id) {
         Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Categoryg not found with id: " + id));
         categoryRepo.delete(category);
     }
 

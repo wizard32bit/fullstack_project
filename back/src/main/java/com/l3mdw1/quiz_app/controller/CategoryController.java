@@ -1,7 +1,10 @@
 package com.l3mdw1.quiz_app.controller;
 
 import com.l3mdw1.quiz_app.model.Category;
+import com.l3mdw1.quiz_app.model.Question;
 import com.l3mdw1.quiz_app.repository.CategoryRepository;
+import com.l3mdw1.quiz_app.service.CategoryService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,21 +15,15 @@ import java.util.List;
 @RequestMapping("/api/categories")
 public class CategoryController {
 
-    private final CategoryRepository categoryRepo;
-
-    public CategoryController(CategoryRepository categoryRepo) {
-        this.categoryRepo = categoryRepo;
-    }
+    @Autowired
+    private CategoryService categoryService;
 
     // Get all categories
     @GetMapping("/")
     public ResponseEntity<?> getAllCategories() {
         try {
-            List<Category> categories = categoryRepo.findAll();
-            if (categories.isEmpty()) {
-                return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Aucune catégorie trouvée");
-            }
-            return ResponseEntity.ok(categories);
+
+            return ResponseEntity.ok(categoryService.getAllCategories());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
                     .body("Erreur lors de la récupération des catégories : " + e.getMessage());
@@ -37,26 +34,17 @@ public class CategoryController {
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable Long id) {
         try {
-            Category category = categoryRepo.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id : " + id));
-            return ResponseEntity.ok(category);
+            return ResponseEntity.ok(categoryService.getCategoryById(id));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur interne du serveur : " + e.getMessage());
         }
     }
 
     // Create new category
-    @PostMapping
+    @PostMapping("/new")
     public ResponseEntity<?> createCategory(@RequestBody Category category) {
         try {
-            if (category.getName() == null || category.getName().trim().isEmpty()) {
-                return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                        .body("Le nom de la catégorie ne peut pas être vide");
-            }
-            Category savedCategory = categoryRepo.save(category);
+            Category savedCategory= categoryService.createCategory(category);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedCategory);
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
@@ -68,36 +56,21 @@ public class CategoryController {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateCategory(@PathVariable Long id, @RequestBody Category updatedCategory) {
         try {
-            Category existingCategory = categoryRepo.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id : " + id));
-
-            if (updatedCategory.getName() != null && !updatedCategory.getName().trim().isEmpty()) {
-                existingCategory.setName(updatedCategory.getName());
-            }
-
-            Category savedCategory = categoryRepo.save(existingCategory);
+            Category savedCategory= categoryService.updateCategory(id, updatedCategory);
             return ResponseEntity.ok(savedCategory);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur lors de la mise à jour de la catégorie : " + e.getMessage());
         }
     }
 
     // Delete category
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteCategory(@PathVariable Long id) {
         try {
-            Category category = categoryRepo.findById(id)
-                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id : " + id));
-            categoryRepo.delete(category);
-            return ResponseEntity.ok("Catégorie supprimée avec succès : " + category.getName());
+            categoryService.deleteCategory(id);
+            return ResponseEntity.ok("Catégorie supprimée avec succès");
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("Erreur lors de la suppression de la catégorie : " + e.getMessage());
         }
     }
 }

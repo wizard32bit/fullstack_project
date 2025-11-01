@@ -6,6 +6,7 @@ import com.l3mdw1.quiz_app.model.User;
 import com.l3mdw1.quiz_app.repository.CategoryRepository;
 import com.l3mdw1.quiz_app.repository.CategoryScoreboardRepository;
 import com.l3mdw1.quiz_app.repository.UserRepository;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -14,46 +15,59 @@ import java.util.Optional;
 @Service
 public class CategoryService {
 
-    private final CategoryRepository categoryRepo;
-    private final UserRepository userRepo;
-    private final CategoryScoreboardRepository scoreboardRepo;
+    @Autowired
+    private CategoryRepository categoryRepo;
 
-    public CategoryService(CategoryRepository categoryRepo, UserRepository userRepo, CategoryScoreboardRepository scoreboardRepo) {
-        this.categoryRepo = categoryRepo;
-        this.userRepo = userRepo;
-        this.scoreboardRepo = scoreboardRepo;
-    }
+    @Autowired
+    private UserRepository userRepo;
 
-    // Create a new category
-    public Category createCategory(Category category) {
-        return categoryRepo.save(category);
-    }
+    @Autowired
+    private CategoryScoreboardRepository scoreboardRepo;
 
-    // Update category
-    public Category updateCategory(Long id, String name) {
-        Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
-        category.setName(name);
-        return categoryRepo.save(category);
-    }
 
-    // Delete category
-    public void deleteCategory(Long id) {
-        Category category = categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
-        categoryRepo.delete(category);
-    }
 
     // Get all categories
     public List<Category> getAllCategories() {
-        return categoryRepo.findAll();
+        List<Category> categories= categoryRepo.findAll();
+        if(categories.isEmpty()){
+            throw new RuntimeException("Aucun catégorie trouvé");
+        }
+        return categories;
     }
 
     // Get category by id
     public Category getCategoryById(Long id) {
         return categoryRepo.findById(id)
-                .orElseThrow(() -> new RuntimeException("Category not found with id: " + id));
+                .orElseThrow(() -> new RuntimeException("Aucune categorie avec l'id: " + id));
     }
+
+    // Create a new category
+    public Category createCategory(Category category) {
+        if(category.getName() == null || category.getName().trim().isEmpty()){
+            throw new RuntimeException("Nom categorie invalide");
+        }
+        return categoryRepo.save(category);
+    }
+
+    // Update category
+    public Category updateCategory(Long id, Category updatedCategory) {
+        Category existingCategory = categoryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id : " + id));
+
+        if(updatedCategory.getName() == null || updatedCategory.getName().trim().isEmpty()){
+            throw new RuntimeException("Nom categorie invalide");
+        }
+        existingCategory.setName(updatedCategory.getName());
+        return categoryRepo.save(existingCategory);
+    }
+
+    // Delete category
+    public void deleteCategory(Long id) {
+        Category category = categoryRepo.findById(id)
+                .orElseThrow(() -> new RuntimeException("Aucun categorie avec l'id: " + id));
+        categoryRepo.delete(category);
+    }
+
 
     // Assign or update user score for a category
     public CategoryScoreboard assignScore(Long categoryId, Long userId, int score) {

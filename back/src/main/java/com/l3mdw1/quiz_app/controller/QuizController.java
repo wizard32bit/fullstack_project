@@ -31,16 +31,16 @@ public class QuizController {
     }
 
     // CREATE new quiz
-    @PostMapping
-    public ResponseEntity<Quiz> createQuiz(@RequestBody Quiz quiz) {
-        Quiz savedQuiz = quizService.createQuiz(quiz);
+    @PostMapping("/new/category/{catId}")
+    public ResponseEntity<Quiz> createQuiz(@PathVariable Long catId, @RequestBody Quiz quiz) {
+        Quiz savedQuiz = quizService.createQuiz(catId, quiz);
         return ResponseEntity.ok(savedQuiz);
     }
 
     // UPDATE existing quiz
-    @PutMapping("/{id}")
-    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @RequestBody Quiz updatedQuiz) {
-        Quiz quiz = quizService.updateQuiz(id, updatedQuiz);
+    @PutMapping("/{id}/category/{catId}")
+    public ResponseEntity<Quiz> updateQuiz(@PathVariable Long id, @PathVariable Long catId,@RequestBody Quiz updatedQuiz) {
+        Quiz quiz = quizService.updateQuiz(id, catId, updatedQuiz);
         return ResponseEntity.ok(quiz);
     }
 

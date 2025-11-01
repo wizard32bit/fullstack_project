@@ -1,6 +1,8 @@
 package com.l3mdw1.quiz_app.controller;
 
+import com.l3mdw1.quiz_app.model.Category;
 import com.l3mdw1.quiz_app.model.Question;
+import com.l3mdw1.quiz_app.repository.CategoryRepository;
 import com.l3mdw1.quiz_app.service.QuestionService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -16,14 +18,13 @@ public class QuestionController {
     @Autowired
     private QuestionService questionService;
 
-    // Get questions by quiz ID
-    @GetMapping("/from/quiz/{quizId}")
-    public ResponseEntity<?> getQuestionsByQuiz(@PathVariable Long quizId) {
+    @GetMapping("/category/{categoryId}")
+    public ResponseEntity<?> getQuestionsByCategory(@PathVariable Long categoryId) {
         try {
-            List<Question> questions = questionService.getQuestionsByQuizId(quizId);
+            List<Question> questions = questionService.getQuestionsByCategory(categoryId);
             return ResponseEntity.ok(questions);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
@@ -49,49 +50,29 @@ public class QuestionController {
         }
     }
 
-
-    // Create question by quiz ID
-    @PostMapping("/new/in/quiz/{quizId}")
-    public ResponseEntity<?> createQuestionByQuizId(
-            @PathVariable Long quizId,
-            @RequestBody Question question) {
+    @PostMapping("/new/category/{catId}")
+    public ResponseEntity<?> createQuestion(@RequestBody Question question, @PathVariable Long catId) {
         try {
-            Question savedQuestion = questionService.createQuestionByQuizId(quizId, question);
+            Question savedQuestion = questionService.createQuestion(question, catId);
             return ResponseEntity.status(HttpStatus.CREATED).body(savedQuestion);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
 
-
-    // Update question + optionally change quiz
-    @PutMapping("/put/{id}/to/quiz/{quizId}")
-    public ResponseEntity<?> updateQuestionQuiz(
-            @PathVariable Long id,
-            @PathVariable Long quizId,
-            @RequestBody Question updatedQuestion) {
-        try {
-            Question updated = questionService.updateQuestionQuiz(id, updatedQuestion, quizId);
-            return ResponseEntity.ok(updated);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-
     // Update question normally
-    @PutMapping("/put/{id}")
+    @PutMapping("/{id}/category/{catId}")
     public ResponseEntity<?> updateQuestion(
             @PathVariable Long id,
+            @PathVariable Long catId,
             @RequestBody Question updatedQuestion) {
         try {
-            Question updated = questionService.updateQuestion(id, updatedQuestion);
+            Question updated = questionService.updateQuestion(id, updatedQuestion, catId);
             return ResponseEntity.ok(updated);
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
         }
     }
-
-
 
     // Delete question
     @DeleteMapping("/delete/{id}")

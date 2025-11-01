@@ -26,6 +26,10 @@ public class Question {
     @JsonIgnore
     private Quiz quiz;
 
+    @ManyToOne
+    @JoinColumn(name = "category_id")
+    private Category category;
+
     public Question(){}
 
 }

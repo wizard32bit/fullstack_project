@@ -23,4 +23,9 @@ public class Category {
     @OneToMany(mappedBy = "categoryCatScore", cascade = CascadeType.ALL)
     @JsonIgnore
     private List<CategoryScoreboard> userScores= new ArrayList<>();
+
+
+    @OneToMany(mappedBy = "category")
+    @JsonIgnore
+    private List<Question> questions = new ArrayList<>();
 }

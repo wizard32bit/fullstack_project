@@ -38,10 +38,10 @@ public class QuizService {
     }
 
     @Transactional
-    public Quiz createQuiz(Quiz quiz) {
-        if (quiz.getCategory() != null && quiz.getCategory().getId() != null) {
-            Category category = categoryRepo.findById(quiz.getCategory().getId())
-                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id: " + quiz.getCategory().getId()));
+    public Quiz createQuiz(Long catId, Quiz quiz) {
+        if (catId != null) {
+            Category category = categoryRepo.findById(catId)
+                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id: " + catId));
             quiz.setCategory(category);
         } else {
             throw new RuntimeException("Le quiz doit appartenir à une catégorie valide");
@@ -57,16 +57,16 @@ public class QuizService {
     }
 
     @Transactional
-    public Quiz updateQuiz(Long id, Quiz updatedQuiz) {
+    public Quiz updateQuiz(Long id, Long catId, Quiz updatedQuiz) {
         Quiz quizFromDB = getQuiz(id);
 
         if (updatedQuiz.getTitle() != null && !updatedQuiz.getTitle().trim().isEmpty()) {
             quizFromDB.setTitle(updatedQuiz.getTitle());
         }
 
-        if (updatedQuiz.getCategory() != null && updatedQuiz.getCategory().getId() != null) {
-            Category category = categoryRepo.findById(updatedQuiz.getCategory().getId())
-                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id: " + updatedQuiz.getCategory().getId()));
+        if (catId != null) {
+            Category category = categoryRepo.findById(catId)
+                    .orElseThrow(() -> new RuntimeException("Aucune catégorie trouvée avec l'id: " + catId));
             quizFromDB.setCategory(category);
         }
 

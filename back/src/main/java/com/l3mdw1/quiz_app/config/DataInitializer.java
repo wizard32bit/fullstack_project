@@ -60,66 +60,68 @@ public class DataInitializer implements CommandLineRunner {
         quizRepo.saveAll(Arrays.asList(quiz1, quiz2, quiz3));
 
         // === Create Questions and Answers for Quiz 1 ===
-        Question q1 = new Question();
-        q1.setContent("What is the speed of light?");
-        q1.setAnswers(Arrays.asList(
-                createAnswer("300,000 km/s", true),
-                createAnswer("150,000 km/s", false),
-                createAnswer("1,000 km/s", false)
-        ));
-        q1.setQuiz(quiz1);
+        Question q1 = createQuestion("What is the speed of light?", science, quiz1,
+                Arrays.asList(
+                        createAnswer("300,000 km/s", true),
+                        createAnswer("150,000 km/s", false),
+                        createAnswer("1,000 km/s", false)
+                ));
 
-        Question q2 = new Question();
-        q2.setContent("Who developed the theory of relativity?");
-        q2.setAnswers(Arrays.asList(
-                createAnswer("Isaac Newton", false),
-                createAnswer("Albert Einstein", true),
-                createAnswer("Nikola Tesla", false)
-        ));
-        q2.setQuiz(quiz1);
+        Question q2 = createQuestion("Who developed the theory of relativity?", science, quiz1,
+                Arrays.asList(
+                        createAnswer("Isaac Newton", false),
+                        createAnswer("Albert Einstein", true),
+                        createAnswer("Nikola Tesla", false)
+                ));
 
-        // === Create Questions and Answers for Quiz 2 ===
-        Question q3 = new Question();
-        q3.setContent("In which year did World War II end?");
-        q3.setAnswers(Arrays.asList(
-                createAnswer("1945", true),
-                createAnswer("1918", false),
-                createAnswer("1939", false)
-        ));
-        q3.setQuiz(quiz2);
+        // === Questions for Quiz 2 ===
+        Question q3 = createQuestion("In which year did World War II end?", history, quiz2,
+                Arrays.asList(
+                        createAnswer("1945", true),
+                        createAnswer("1918", false),
+                        createAnswer("1939", false)
+                ));
 
-        Question q4 = new Question();
-        q4.setContent("Who was the British Prime Minister during most of WWII?");
-        q4.setAnswers(Arrays.asList(
-                createAnswer("Winston Churchill", true),
-                createAnswer("Neville Chamberlain", false),
-                createAnswer("Margaret Thatcher", false)
-        ));
-        q4.setQuiz(quiz2);
+        Question q4 = createQuestion("Who was the British Prime Minister during most of WWII?", history, quiz2,
+                Arrays.asList(
+                        createAnswer("Winston Churchill", true),
+                        createAnswer("Neville Chamberlain", false),
+                        createAnswer("Margaret Thatcher", false)
+                ));
 
-        // === Create Questions and Answers for Quiz 3 ===
-        Question q5 = new Question();
-        q5.setContent("Which language is primarily used for Android development?");
-        q5.setAnswers(Arrays.asList(
-                createAnswer("Java", true),
-                createAnswer("Python", false),
-                createAnswer("C#", false)
-        ));
-        q5.setQuiz(quiz3);
+        // === Questions for Quiz 3 ===
+        Question q5 = createQuestion("Which language is primarily used for Android development?", tech, quiz3,
+                Arrays.asList(
+                        createAnswer("Java", true),
+                        createAnswer("Python", false),
+                        createAnswer("C#", false)
+                ));
 
-        Question q6 = new Question();
-        q6.setContent("What does HTML stand for?");
-        q6.setAnswers(Arrays.asList(
-                createAnswer("HyperText Markup Language", true),
-                createAnswer("HyperText Markdown Language", false),
-                createAnswer("HighText Machine Language", false)
-        ));
-        q6.setQuiz(quiz3);
+        Question q6 = createQuestion("What does HTML stand for?", tech, quiz3,
+                Arrays.asList(
+                        createAnswer("HyperText Markup Language", true),
+                        createAnswer("HyperText Markdown Language", false),
+                        createAnswer("HighText Machine Language", false)
+                ));
 
-        // Save all Questions
+        // Save all questions
         questionRepo.saveAll(List.of(q1, q2, q3, q4, q5, q6));
 
         System.out.println("=== Test data inserted successfully ===");
+    }
+
+    private Question createQuestion(String content, Category category, Quiz quiz, List<Answer> answers) {
+        Question question = new Question();
+        question.setContent(content);
+        question.setCategory(category);
+        question.setQuiz(quiz);
+
+        for (Answer answer : answers) {
+            answer.setQuestion(question);
+        }
+        question.setAnswers(answers);
+
+        return question;
     }
 
     private Answer createAnswer(String content, boolean isCorrect) {

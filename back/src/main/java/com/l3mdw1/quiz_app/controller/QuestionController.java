@@ -17,7 +17,7 @@ public class QuestionController {
     private QuestionService questionService;
 
     // Get questions by quiz ID
-    @GetMapping("/quiz/{quizId}")
+    @GetMapping("/from/quiz/{quizId}")
     public ResponseEntity<?> getQuestionsByQuiz(@PathVariable Long quizId) {
         try {
             List<Question> questions = questionService.getQuestionsByQuizId(quizId);
@@ -51,7 +51,7 @@ public class QuestionController {
 
 
     // Create question by quiz ID
-    @PostMapping("create/from/quiz/{quizId}")
+    @PostMapping("/new/in/quiz/{quizId}")
     public ResponseEntity<?> createQuestionByQuizId(
             @PathVariable Long quizId,
             @RequestBody Question question) {
@@ -63,20 +63,9 @@ public class QuestionController {
         }
     }
 
-    // Create question with quiz inside request body
-    @PostMapping("/create")
-    public ResponseEntity<?> createQuestion(@RequestBody Question question) {
-        try {
-            Question saved = questionService.createQuestion(question);
-            return ResponseEntity.status(HttpStatus.CREATED).body(saved);
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
-        }
-    }
-
 
     // Update question + optionally change quiz
-    @PutMapping("/{id}/to/quiz/{quizId}")
+    @PutMapping("/put/{id}/to/quiz/{quizId}")
     public ResponseEntity<?> updateQuestionQuiz(
             @PathVariable Long id,
             @PathVariable Long quizId,
@@ -90,7 +79,7 @@ public class QuestionController {
     }
 
     // Update question normally
-    @PutMapping("/{id}")
+    @PutMapping("/put/{id}")
     public ResponseEntity<?> updateQuestion(
             @PathVariable Long id,
             @RequestBody Question updatedQuestion) {
@@ -105,7 +94,7 @@ public class QuestionController {
 
 
     // Delete question
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public ResponseEntity<?> deleteQuestion(@PathVariable Long id) {
         try {
             questionService.deleteQuestion(id);

@@ -2,6 +2,7 @@ package com.l3mdw1.quiz_app.controller;
 
 import com.l3mdw1.quiz_app.model.QuizScoreboard;
 import com.l3mdw1.quiz_app.service.QuizScoreboardService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,11 +13,8 @@ import java.util.List;
 @RequestMapping("/api/quiz-scores")
 public class QuizScoreboardController {
 
-    private final QuizScoreboardService quizScoreboardService;
-
-    public QuizScoreboardController(QuizScoreboardService quizScoreboardService) {
-        this.quizScoreboardService = quizScoreboardService;
-    }
+    @Autowired
+    private QuizScoreboardService quizScoreboardService;
 
     // Create or update a score
     @PostMapping("/assign")

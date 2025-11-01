@@ -19,7 +19,7 @@ public class CategoryController {
     }
 
     // Get all categories
-    @GetMapping
+    @GetMapping("/")
     public ResponseEntity<?> getAllCategories() {
         try {
             List<Category> categories = categoryRepo.findAll();

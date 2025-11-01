@@ -1,5 +1,6 @@
 package com.l3mdw1.quiz_app.service;
 
+import com.l3mdw1.quiz_app.controller.AnswerController;
 import com.l3mdw1.quiz_app.model.Answer;
 import com.l3mdw1.quiz_app.model.Question;
 import com.l3mdw1.quiz_app.model.Quiz;
@@ -78,6 +79,10 @@ public class QuestionService {
         Quiz quiz = quizRepo.findById(quizId)
                 .orElseThrow(() -> new RuntimeException("Aucun quiz trouvé avec l'id: " + quizId));
 
+        boolean duplicateQuestionExists= quiz.getQuestions().stream().anyMatch(question1 -> question.getContent().equals(question1.getContent()));
+        if(duplicateQuestionExists){
+            throw new RuntimeException("Cette question déja existe dans cet quiz");
+        }
         // Set quiz on question
         question.setQuiz(quiz);
 
@@ -122,18 +127,46 @@ public class QuestionService {
         return updateQuestionInternal(id, updatedQuestion, quizId);
     }
 
-    private Question updateQuestionInternal(Long id, Question updatedQuestion, Long quizId) {
+    @Transactional
+    public Question updateQuestionInternal(Long id, Question updatedQuestion, Long quizId) {
         Question questionFromDB = getQuestion(id);
 
         // Update content
         if (updatedQuestion.getContent() != null && !updatedQuestion.getContent().trim().isEmpty()) {
-            questionFromDB.setContent(updatedQuestion.getContent());
+            questionFromDB.setContent(updatedQuestion.getContent().trim());
         }
 
-        // Update answers
-        if (updatedQuestion.getAnswers() != null && !updatedQuestion.getAnswers().isEmpty()) {
-            questionFromDB.getAnswers().clear();
-            questionFromDB.getAnswers().addAll(updatedQuestion.getAnswers());
+        // Validate answers
+        if (updatedQuestion.getAnswers() == null || updatedQuestion.getAnswers().isEmpty()) {
+            throw new RuntimeException("!! Validation de la requete: structure des réponses invalide");
+        }
+        List<Answer> answers = updatedQuestion.getAnswers();
+        long correctCount = answers.stream().filter(Answer::isCorrect).count();
+        if (correctCount != 1) {
+            throw new RuntimeException("Une question doit avoir exactement une seule réponse correcte");
+        }
+        if (answers.size() > 4) {
+            throw new RuntimeException("Une question doit avoir au plus 4 réponses");
+        }
+
+        // Update existing answers and add new ones
+        for (Answer updatedAnswer : answers) {
+            if (updatedAnswer.getId() != null) {
+                // Existing answer → update
+                Answer existing = questionFromDB.getAnswers().stream()
+                        .filter(a -> a.getId().equals(updatedAnswer.getId()))
+                        .findFirst()
+                        .orElseThrow(() -> new RuntimeException("Réponse introuvable: " + updatedAnswer.getId()));
+                existing.setContent(updatedAnswer.getContent().trim());
+                existing.setCorrect(updatedAnswer.isCorrect());
+            } else {
+                // New answer → add
+                if(questionFromDB.getAnswers().size()<4){
+                    updatedAnswer.setQuestion(questionFromDB);
+                    questionFromDB.getAnswers().add(updatedAnswer);
+                }else
+                    throw new RuntimeException("Cette question contient 4 réponses, l'ajout des autres réposnes est impossible.");
+            }
         }
 
         // Optionally change quiz
@@ -145,6 +178,7 @@ public class QuestionService {
 
         return questionRepo.save(questionFromDB);
     }
+
 
     public void deleteQuestion(Long id) {
         Question question = getQuestion(id);

@@ -1,5 +1,6 @@
 package com.l3mdw1.quiz_app.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
 
@@ -12,6 +13,11 @@ public class Answer {
 
     private String content;
     private boolean isCorrect;
+
+    @ManyToOne
+    @JoinColumn(name= "question_id")
+    @JsonIgnore
+    private Question question;
 }
 
 

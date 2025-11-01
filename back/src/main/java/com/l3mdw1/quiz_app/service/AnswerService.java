@@ -30,9 +30,6 @@ public class AnswerService {
         }
 
 
-        // Debug: print current answers before adding
-        System.out.println("Question ID: " + question.getId());
-        System.out.println("Nombre de réponses existantes: " + question.getAnswers().size());
         for (Answer a : question.getAnswers()) {
             System.out.println("- Réponse: " + a.getContent() + " (correcte: " + a.isCorrect() + ")");
         }
@@ -92,8 +89,10 @@ public class AnswerService {
                 .findFirst()
                 .orElseThrow(() -> new RuntimeException("Réponse introuvable pour cet ID"));
 
+        boolean isOnlyCorrect=false;
+
         // BLOCK any update if question has 4 answers AND this one is the only correct answer
-        boolean isOnlyCorrect = existingAnswer.isCorrect() &&
+        isOnlyCorrect = existingAnswer.isCorrect() &&
                 question.getAnswers().stream()
                         .filter(a -> !a.getId().equals(answerId))
                         .noneMatch(Answer::isCorrect);
@@ -102,8 +101,22 @@ public class AnswerService {
             throw new RuntimeException("Impossible de modifier cette réponse : c'est la seule correcte et la question contient déjà 4 réponses.");
         }
 
-        // Update correctness (and ensure only one correct per question)
-        if (updatedAnswer.isCorrect() && !existingAnswer.isCorrect()) {
+        // Update correctness
+        if (existingAnswer.isCorrect() && !updatedAnswer.isCorrect()) {
+            // only block if it is the only correct in 4-answer question
+            isOnlyCorrect = question.getAnswers().size() == 4 &&
+                    question.getAnswers().stream()
+                            .filter(a -> !a.getId().equals(answerId))
+                            .noneMatch(Answer::isCorrect);
+
+            if (isOnlyCorrect) {
+                throw new RuntimeException("Impossible de modifier cette réponse : c'est la seule correcte et la question contient déjà 4 réponses.");
+            }
+            existingAnswer.setCorrect(false);
+        }
+
+        // Set correct to true if updating from false
+        if (!existingAnswer.isCorrect() && updatedAnswer.isCorrect()) {
             boolean otherAlreadyCorrect = question.getAnswers().stream()
                     .anyMatch(a -> a.isCorrect() && !a.getId().equals(answerId));
             if (otherAlreadyCorrect) {

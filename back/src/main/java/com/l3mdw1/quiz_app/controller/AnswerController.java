@@ -14,10 +14,10 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping("/")
-    public ResponseEntity<?> getAll() {
+    @GetMapping("/from/question/{questionId}")
+    public ResponseEntity<?> getAnswersByQuestion(@PathVariable Long questionId) {
         try {
-            return ResponseEntity.ok(answerService.getAll());
+            return ResponseEntity.ok(answerService.getAllByQuestionId(questionId));
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
@@ -32,16 +32,17 @@ public class AnswerController {
         }
     }
 
-    @GetMapping("/question/{questionId}")
-    public ResponseEntity<?> getAnswersByQuestion(@PathVariable Long questionId) {
+    @GetMapping("/")
+    public ResponseEntity<?> getAll() {
         try {
-            return ResponseEntity.ok(answerService.getAllByQuestionId(questionId));
+            return ResponseEntity.ok(answerService.getAll());
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body(e.getMessage());
         }
     }
 
-    @PostMapping("/question/{questionId}")
+
+    @PostMapping("/new/in/question/{questionId}")
     public ResponseEntity<?> createAnswer(
             @PathVariable Long questionId,
             @RequestBody Answer answerRequest) {
@@ -53,7 +54,7 @@ public class AnswerController {
         }
     }
 
-    @PutMapping("/question/{questionId}/{answerId}")
+    @PutMapping("/put/{answerId}/of/question/{questionId}")
     public ResponseEntity<?> updateAnswer(
             @PathVariable Long questionId,
             @PathVariable Long answerId,
@@ -65,7 +66,7 @@ public class AnswerController {
         }
     }
 
-    @DeleteMapping("/question/{questionId}/{answerId}")
+    @DeleteMapping("/delete/{answerId}/from/question/{questionId}")
     public ResponseEntity<?> deleteAnswer(
             @PathVariable Long questionId,
             @PathVariable Long answerId) {

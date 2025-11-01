@@ -55,7 +55,7 @@ public class CategoryScoreboardController {
         }
     }
 
-    @PostMapping
+    @PostMapping("/")
     public ResponseEntity<?> saveScore(@RequestBody CategoryScoreboard categoryScoreboard) {
         try {
             CategoryScoreboard saved = categoryScoreboardService.saveScore(categoryScoreboard);

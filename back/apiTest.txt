@@ -1,0 +1,40 @@
+Answer
+  GET http://localhost:808/api/answers/
+  GET http://localhost:808/api/answers/1
+  GET http://localhost:808/api/answers/question/1
+  POST http://localhost:808/api/answers/new/into/question/1 {"content": "420,000 km/s","correct": false}
+  PUT http://localhost:808/api/answers/put/5/from/question/2
+  DELETE http://localhost:808/api/answers/delete/1/from/question/1
+
+Question
+  GET http://localhost:808/api/questions/
+  GET http://localhost:808/api/questions/1
+  GET http://localhost:808/api/questions/category/1
+  POST http://localhost:808/api/questions/new/category/2 {"content": "What is called the process used by plants, algae, and some bacteria to convert light energy into chemical energy, using sunlight ?","answers": [{"content": "Photosynthesis","correct": true},{"content": "Lightosynthesis","correct": false},{"content": "Clorophisynthesis","correct": false}]}
+  PUT http://localhost:808/api/questions/8/category/1 {"content": "What is called the process used by plants to convert light energy into chemical energy, using sunlight ?"}
+  DELETE http://localhost:808/api/questions/delete/8
+
+Quiz
+  GET http://localhost:808/api/quizzes/
+  GET http://localhost:808/api/quizzes/1
+  GET http://localhost:808/api/quizzes/4/questions
+  POST http://localhost:808/api/quizzes/new/category/1 {"title": "Programming general knowledge"}
+  PUT http://localhost:808/api/quizzes/4/category/1 {"title": "Programming knowledge"}
+  DELETE http://localhost:808/api/quizzes/delete/4
+
+Category
+  GET http://localhost:808/api/categories/
+  GET http://localhost:808/api/categories/1
+  POST http://localhost:808/api/categories/new {"name": "Programming"}
+  PUT http://localhost:808/api/categories/4 {"name": "Programming & Comp Science"}
+  DELETE http://localhost:808/api/categories/delete/4
+
+CategoryScoreboard
+  GET http://localhost:808/api/category-scores/
+  GET http://localhost:808/api/category-scores/user/7
+  GET http://localhost:808/api/category-scores/category/2
+  GET http://localhost:808/api/category-scores/2/7
+  POST http://localhost:808/api/category-scores/assign-score {"score": 7}
+
+QuestionQuiz
+  POST http://localhost:808/api/question-quiz/assign/3/to/2 {"answered_correctly": true}

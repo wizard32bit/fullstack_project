@@ -3,6 +3,7 @@ package com.l3mdw1.quiz_app.model;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,4 +29,10 @@ public class Category {
     @OneToMany(mappedBy = "category")
     @JsonIgnore
     private List<Question> questions = new ArrayList<>();
+
+    public Category(){}
+    public Category(String name){
+        this.name= name;
+
+    }
 }

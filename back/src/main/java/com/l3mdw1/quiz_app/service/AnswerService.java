@@ -87,7 +87,7 @@ public class AnswerService {
         Answer existingAnswer = question.getAnswers().stream()
                 .filter(a -> a.getId().equals(answerId))
                 .findFirst()
-                .orElseThrow(() -> new RuntimeException("Réponse introuvable pour cet ID"));
+                .orElseThrow(() -> new RuntimeException("Réponse introuvable pour cet ID: "+answerId));
 
         boolean isOnlyCorrect=false;
 

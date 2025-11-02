@@ -31,5 +31,9 @@ public class Question {
     private Category category;
 
     public Question(){}
+    public Question(String content, Category category){
+        this.content= content;
+        this.category= category;
+    }
 
 }

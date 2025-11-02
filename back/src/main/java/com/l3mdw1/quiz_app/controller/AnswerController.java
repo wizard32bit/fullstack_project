@@ -14,7 +14,7 @@ public class AnswerController {
     @Autowired
     private AnswerService answerService;
 
-    @GetMapping("/from/question/{questionId}")
+    @GetMapping("/question/{questionId}")
     public ResponseEntity<?> getAnswersByQuestion(@PathVariable Long questionId) {
         try {
             return ResponseEntity.ok(answerService.getAllByQuestionId(questionId));
@@ -42,7 +42,7 @@ public class AnswerController {
     }
 
 
-    @PostMapping("/new/in/question/{questionId}")
+    @PostMapping("/new/into/question/{questionId}")
     public ResponseEntity<?> createAnswer(
             @PathVariable Long questionId,
             @RequestBody Answer answerRequest) {
@@ -54,7 +54,7 @@ public class AnswerController {
         }
     }
 
-    @PutMapping("/put/{answerId}/of/question/{questionId}")
+    @PutMapping("/put/{answerId}/from/question/{questionId}")
     public ResponseEntity<?> updateAnswer(
             @PathVariable Long questionId,
             @PathVariable Long answerId,

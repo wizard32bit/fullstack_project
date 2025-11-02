@@ -22,7 +22,6 @@ public class CategoryController {
     @GetMapping("/")
     public ResponseEntity<?> getAllCategories() {
         try {
-
             return ResponseEntity.ok(categoryService.getAllCategories());
         } catch (Exception e) {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)

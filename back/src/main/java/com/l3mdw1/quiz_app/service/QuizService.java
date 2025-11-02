@@ -87,7 +87,11 @@ public class QuizService {
     }
 
     public List<Question> getQuestionsByQuizId(Long quizId) {
-        Quiz quiz = getQuiz(quizId);
-        return quiz.getQuestions();
+        Quiz quiz= getQuiz(quizId);
+        List<Question> questions= quiz.getQuestions();
+        if(questions.isEmpty()) {
+            throw  new RuntimeException("Aucun question dans cet quiz.");
+        }
+        return questions;
     }
 }

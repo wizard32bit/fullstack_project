@@ -30,4 +30,12 @@ public class User {
 
     @OneToMany(mappedBy = "userCatScore", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<CategoryScoreboard> categoryScores = new ArrayList<>();
+
+
+    public User(String uname, String e, String p, boolean isAdmin){
+        this.username= uname;
+        this.email= e;
+        this.password= p;
+        this.isAdmin= isAdmin;
+    }
 }

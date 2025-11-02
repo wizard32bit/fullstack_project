@@ -3,7 +3,10 @@ package com.l3mdw1.quiz_app.controller;
 import com.l3mdw1.quiz_app.model.CategoryScoreboard;
 import com.l3mdw1.quiz_app.service.CategoryScoreboardService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.event.RepositoryEvent;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -14,16 +17,6 @@ public class CategoryScoreboardController {
 
     @Autowired
     private CategoryScoreboardService categoryScoreboardService;
-
-    @GetMapping
-    public ResponseEntity<?> getAllCategoryScores() {
-        try {
-            List<CategoryScoreboard> scores = categoryScoreboardService.getAll();
-            return ResponseEntity.ok(scores);
-        } catch (Exception e) {
-            return ResponseEntity.badRequest().body(e.getMessage());
-        }
-    }
 
     @GetMapping("/user/{userId}")
     public ResponseEntity<?> getScoresByUser(@PathVariable Long userId) {
@@ -55,17 +48,41 @@ public class CategoryScoreboardController {
         }
     }
 
-    @PostMapping("/")
-    public ResponseEntity<?> saveScore(@RequestBody CategoryScoreboard categoryScoreboard) {
+    @GetMapping("/")
+    public ResponseEntity<?> getAllCategoryScores() {
         try {
-            CategoryScoreboard saved = categoryScoreboardService.saveScore(categoryScoreboard);
+            List<CategoryScoreboard> scores = categoryScoreboardService.getAll();
+            return ResponseEntity.ok(scores);
+        } catch (Exception e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/assign-score/{userId}/{catId}")
+    public ResponseEntity<?> saveScore(@PathVariable Long userId,
+                                       @PathVariable Long catId,
+                                       @RequestBody CategoryScoreboard categoryScoreboard) {
+        try {
+            CategoryScoreboard saved = categoryScoreboardService.saveScore(userId, catId, categoryScoreboard);
             return ResponseEntity.ok(saved);
         } catch (Exception e) {
             return ResponseEntity.badRequest().body(e.getMessage());
         }
     }
 
-    @DeleteMapping("/{categoryId}/{userId}")
+    @PutMapping
+    public ResponseEntity<?> updateScore(@PathVariable Long userId,
+                                         @PathVariable Long catId,
+                                         @RequestBody CategoryScoreboard updatedCategoryScoreboard) {
+        try{
+            CategoryScoreboard updatedscore= categoryScoreboardService.updateScore(userId, catId, updatedCategoryScoreboard);
+            return ResponseEntity.ok(updatedscore);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    @DeleteMapping("/{userId}/{categoryId}")
     public ResponseEntity<?> deleteScore(@PathVariable Long categoryId, @PathVariable Long userId) {
         try {
             categoryScoreboardService.deleteScore(userId, categoryId);

@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="8e69128d-ad3f-4376-a0bc-9a52ce6caf17" name="Changes" comment="setup answer service and controller">
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/l3mdw1/quiz_app/model/Question.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/l3mdw1/quiz_app/model/Question.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/com/l3mdw1/quiz_app/model/Quiz.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/com/l3mdw1/quiz_app/model/Quiz.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/CategoryController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/CategoryController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/CategoryScoreboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/CategoryScoreboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuestionController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuestionController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuizController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuizController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuizScoreboardController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/QuizScoreboardController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/model/Question.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/model/Question.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/model/Quiz.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/model/Quiz.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/AnswerService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/AnswerService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/CategoryScoreboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/CategoryScoreboardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/CategoryService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/CategoryService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/QuestionService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/QuestionService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/QuizScoreboardService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/QuizScoreboardService.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/com/l3mdw1/quiz_app/service/UserService.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="GitHubPullRequestSearchHistory"><![CDATA[{
+  "lastFilter": {
+    "state": "OPEN",
+    "assignee": "wizard32bit"
+  }
+}]]></component>
+  <component name="GithubPullRequestsUISettings"><![CDATA[{
+  "selectedUrlAndAccountId": {
+    "url": "https://github.com/wizard32bit/fullstack_project.git",
+    "accountId": "604ecf35-c601-4ed7-b3b5-c3923d85c730"
+  }
+}]]></component>
+  <component name="MavenImportPreferences">
+    <option name="generalSettings">
+      <MavenGeneralSettings>
+        <option name="mavenHomeTypeForPersistence" value="WRAPPER" />
+      </MavenGeneralSettings>
+    </option>
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 0
+}</component>
+  <component name="ProjectId" id="33lSq4q6bB4zvlkEGh4IQy3lUwk" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "Application.QuizAppApplication.executor": "Run",
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "RunOnceActivity.TerminalTabsStorage.copyFrom.TerminalArrangementManager.252": "true",
+    "RunOnceActivity.git.unshallow": "true",
+    "git-widget-placeholder": "master",
+    "ignore.virus.scanning.warn.message": "true",
+    "kotlin-language-version-configured": "true",
+    "last_opened_file_path": "C:/Users/SUDHT/Documents/fullstack/mini_projet/back",
+    "settings.editor.selected.configurable": "project.propVCSSupport.DirectoryMappings"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration default="true" type="JetRunConfigurationType">
+      <module name="back" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="KotlinStandaloneScriptRunConfigurationType">
+      <module name="back" />
+      <option name="filePath" />
+      <method v="2" />
+    </configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="8e69128d-ad3f-4376-a0bc-9a52ce6caf17" name="Changes" comment="" />
+      <created>1759890354491</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1759890354491</updated>
+    </task>
+    <task id="LOCAL-00001" summary="setup answer service and controller">
+      <option name="closed" value="true" />
+      <created>1761942501411</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1761942501411</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="setup answer service and controller" />
+    <option name="LAST_COMMIT_MESSAGE" value="setup answer service and controller" />
+  </component>
+</project>
